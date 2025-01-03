@@ -1,13 +1,16 @@
-const Total = ({exercises}) => <p><strong>total of {exercises} exercises</strong></p>
+import { act } from "react"
 
-const Part = ({name,exercises}) => <p>{name} {exercises}</p>
+const Total = ({ exercises }) => <p><strong>total of {exercises} exercises</strong></p>
+
+const Part = ({ name, exercises }) => <p>{name} {exercises}</p>
 
 const Content = ({ parts }) => {
   return (
     <section id="parts">
-      {parts.map(part => (
-        <Part key={part.id} name={part.name} exercises={part.exercises}/>
-      ))}
+      {parts.map(part => {
+        console.log(part.id, " ", part.name, " ", part.exercises)
+        return <Part key={part.id} name={part.name} exercises={part.exercises} />
+      })}
     </section>
   )
 }
@@ -19,9 +22,16 @@ const Course = ({ course }) => {
     <>
       <Header heading={course.name} />
       <Content parts={course.parts} />
-      <Total exercises={course.parts
-        .map(part => (part.exercises))
-        .reduce((total, actual) => total + actual, 0)
+      <Total exercises={
+        course.parts
+          .map(part => {
+            console.log(part.exercises);
+            return part.exercises
+          })
+          .reduce((total, actual) => {
+            console.log(actual, " - ", total)
+            return total + actual
+          })
       } />
     </>
   )
