@@ -1,41 +1,4 @@
-import { act } from "react"
-
-const Total = ({ exercises }) => <p><strong>total of {exercises} exercises</strong></p>
-
-const Part = ({ name, exercises }) => <p>{name} {exercises}</p>
-
-const Content = ({ parts }) => {
-  return (
-    <section id="parts">
-      {parts.map(part => {
-        console.log(part.id, " ", part.name, " ", part.exercises)
-        return <Part key={part.id} name={part.name} exercises={part.exercises} />
-      })}
-    </section>
-  )
-}
-
-const Header = ({ heading }) => <h2>{heading}</h2>
-
-const Course = ({ course }) => {
-  return (
-    <>
-      <Header heading={course.name} />
-      <Content parts={course.parts} />
-      <Total exercises={
-        course.parts
-          .map(part => {
-            console.log(part.exercises);
-            return part.exercises
-          })
-          .reduce((total, actual) => {
-            console.log(actual, " - ", total)
-            return total + actual
-          })
-      } />
-    </>
-  )
-}
+import Course from './components/Course'
 
 const App = () => {
   const courses = [
@@ -85,10 +48,11 @@ const App = () => {
 
   return (
     <>
-      <Header heading={'Web development curriculum'}/>
+      <h1>Web development curriculum</h1>
       <Course course={courses[0]}/>
       <Course course={courses[1]}/>
     </>
   )
 }
+
 export default App
