@@ -1,4 +1,7 @@
-import { use } from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+
 import { useState } from 'react'
 
 const App = () => {
@@ -28,15 +31,6 @@ const App = () => {
     setFilter(e.target.value)
   }
 
-  const toShow = filter == ''
-    ? persons
-      .map(person => <p key={person.id}>{person.name} {person.number}</p>)
-    : persons
-      .filter(person => 
-        person.name.toLowerCase().includes(filter.toLowerCase())
-      )
-      .map(person => <p key={person.id}>{person.name} {person.number}</p>)
-
   const handleSumbit = (e) => {
     e.preventDefault()
     const personObject = {
@@ -60,21 +54,17 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input value={filter} onChange={handleFilter} />
-      <h2>add a new</h2>
-      <form onSubmit={handleSumbit}>
-        <div>
-          name: <input value={newName} onChange={handleName} required />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumber} pattern="[0-9+\(\)\- ]*" required />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter filter={filter} handleFilter={handleFilter} />
+      <h2>Add a new</h2>
+      <PersonForm
+        handleSumbit={handleSumbit}
+        newName={newName}
+        handleName={handleName}
+        newNumber={newNumber}
+        handleNumber={handleNumber} 
+      />
       <h2>Numbers</h2>
-      {toShow}
+      <Persons filter={filter} persons={persons}/>
     </div>
   )
 }
